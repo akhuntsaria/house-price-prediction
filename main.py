@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+import sys
 
 def get_linear_regression_and_test_data():
     df = pd.read_csv("data.csv")
@@ -24,7 +25,11 @@ def run_automatic_test(reg, X_test, y_test):
 
 def run_manual_test(reg):
     print("------- Manual test -------")
-    sqmInput = float(input('Enter sqm: '))
+    sqmInput = input('Enter sqm (or q!): ')
+    if sqmInput == 'q!':
+        sys.exit()
+
+    sqmInput = float(sqmInput)
 
     # Convert input to 2D array and get prediction
     print("Prediction:", reg.predict([[sqmInput]])[0])
@@ -32,4 +37,6 @@ def run_manual_test(reg):
 reg, X_test, y_test = get_linear_regression_and_test_data()
 
 run_automatic_test(reg, X_test, y_test)
-run_manual_test(reg)
+
+while True:
+    run_manual_test(reg)
